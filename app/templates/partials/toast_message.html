@@ -1,0 +1,19 @@
+{% with messages = get_flashed_messages(category_filter=["success"]) %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="toast__box toast--success">
+                <p class="toast__content">{{ message }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% with messages = get_flashed_messages(category_filter=["danger"]) %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="toast__box toast--danger">
+                <p class="toast__content">{{ message }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
