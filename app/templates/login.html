@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="min-vh-100 d-flex justify-content-center align-items-center flex-column">
+    <h1>Login</h1>
+    <form action="" method="POST" class="w-25">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(size=20, class="form-control") }}
+            {% for error in form.username.errors %}
+                <div>
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(size=20, class="form-control") }}
+            {% for error in form.password.errors %}
+                <div>
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+</div>
+{% endblock %}
