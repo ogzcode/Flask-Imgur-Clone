@@ -1,0 +1,25 @@
+<nav class="navbar">
+    <h1 class="navbar__brand roboto-700">Pic<span>gur</span></h1>
+    <button class="toggle__btn">
+        <i class="fa-sharp fa-solid fa-bars"></i>
+    </button>
+    <div class="navbar__collapse roboto-400">
+        <ul>
+            <li>
+                <i class="fa-solid fa-house"></i>
+                <a href="{{ url_for('index') }}">Home</a>
+            </li>
+            <li>
+                <i class="fa-solid fa-file-circle-plus"></i>
+                <a href="#">Add Image</a>
+            </li>
+            <li>
+                <i class="fa-solid fa-gear"></i>
+                <a href="#">Settings</a>
+            </li>
+            <li>
+                <a href="{{ url_for('logout') }}" class="logout__btn">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
