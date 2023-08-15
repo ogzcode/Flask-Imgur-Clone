@@ -18,6 +18,8 @@ build/
 docs/_build/
 .vscode
 __pycache__/
+/app.db
+/migrations/
 
 # Coverage reports
 htmlcov/
