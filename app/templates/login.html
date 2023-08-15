@@ -1,12 +1,17 @@
 {% extends "index.html" %}
 
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+
 {% block content %}
-<div class="min-vh-100 d-flex justify-content-center align-items-center flex-column">
-    <h1>Login</h1>
-    <form action="" method="POST" class="w-25">
+<div class="auth__container roboto-700">
+    <form action="" method="POST" class="form">
+        <h1 class="header">Login</h1>
         {{ form.hidden_tag() }}
 
-        <div class="mb-3">
+        <div class="input__box">
             {{ form.username.label(class="form-label") }}
             {{ form.username(size=20, class="form-control") }}
             {% for error in form.username.errors %}
@@ -15,16 +20,17 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="mb-3">
+        <div class="input__box">
             {{ form.password.label(class="form-label") }}
             {{ form.password(size=20, class="form-control") }}
             {% for error in form.password.errors %}
                 <div>
-                    {{ error }}
+                    hello {{ error }}
                 </div>
             {% endfor %}
         </div>
-        {{ form.submit(class="btn btn-primary") }}
+        <a href="{{ url_for('register') }}" class="link">Don't have an account?</a>
+        {{ form.submit(class="submit__btn") }}
     </form>
 </div>
 {% endblock %}
