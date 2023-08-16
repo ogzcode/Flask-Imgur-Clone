@@ -1,4 +1,5 @@
 @import "./navbar.css";
+@import "./add_image.css";
 
 .gallery {
     margin: 0 auto;
@@ -6,13 +7,10 @@
     list-style: none;
     width: 100%;
     max-width: 1200px;
-    padding-top: 48px;
+    padding-top: 24px;
 }
 
 .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: 0 auto;
     padding: 0;
     list-style: none;
@@ -21,7 +19,8 @@
     color: var(--text-color);
     border-bottom: 1px solid var(--text-color);
     padding-bottom: 16px;
-    margin-bottom: 48px;
+    margin-bottom: 24px;
+    font-size: 24px;
 }
 
 .image__container {
@@ -77,4 +76,9 @@
 .image__box:hover .image__box-inline {
     visibility: visible;
     opacity: 1;
+}
+
+.empty__text {
+    color: var(--text-color);
+    font-size: 24px;
 }

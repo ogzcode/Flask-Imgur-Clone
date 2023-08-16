@@ -4,5 +4,5 @@ if (toast) {
     setTimeout(() => {
         toast.style.display = 'none';
     }
-    , 2000);
+    , 3000);
 }

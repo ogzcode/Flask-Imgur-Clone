@@ -28,4 +28,4 @@ class Image(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return '<Image {}>'.format(self.name)
+        return '<Image {}>'.format(self.path)

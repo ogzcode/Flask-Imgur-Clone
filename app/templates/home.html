@@ -6,6 +6,7 @@
 
 {% block content %}
 {% include "./partials/navbar.html" %}
+{% include "./partials/add_image.html" %}
 
 <div class="gallery">
     <h1 class="header roboto-700">Gallery</h1>
@@ -22,7 +23,11 @@
         {% endfor %}
     </div>
     {% else %}
-    <h1>Image will be render here...</h1>
+    <h1 class="empty__text roboto-400">Image will be render here...</h1>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/add_image.js') }}"></script>
 {% endblock %}

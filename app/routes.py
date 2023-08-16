@@ -5,10 +5,11 @@ import os
 import string
 import random
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Image
 from app import db
 from app.forms import Login, Register
 from config import upload_folder
+
 
 def generate_random_string(length):
     letters = string.ascii_letters
@@ -18,23 +19,6 @@ def generate_random_string(length):
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def index():
-    if request.method == "POST":
-        file = request.files['img']
-        filename = generate_random_string(10)
-        ext = os.path.splitext(file.filename)[1]  # Dosya uzantısını al
-        filename_with_extension = filename + ext  # Yeni dosya adını uzantıyla birleştir
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename_with_extension)
-        file.save(filepath)
-        flash('Image uploaded successfully', 'success')
-        """ filename = secure_filename(file.filename)
-        if filename in os.listdir(upload_folder):
-            flash('Image already exists', 'danger')
-        else:
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            flash('Image uploaded successfully', 'success') """
-
-        return redirect(url_for('index'))
-
     image_files = os.listdir(upload_folder)
     return render_template('home.html', title='Home', images=image_files)
 
@@ -46,6 +30,30 @@ def delete_image(filename):
     return redirect(url_for('index'))
 
 
+@app.route("/addImage", methods=["POST"])
+def addImage():
+    if request.method == "POST":
+        file = request.files['img']
+        filename = generate_random_string(20)
+
+        ext = os.path.splitext(file.filename)[1] 
+        filename_with_extension = filename + ext
+
+        filepath = os.path.join(
+            app.config['UPLOAD_FOLDER'], filename_with_extension)
+        file.save(filepath)
+
+        user_id = current_user.get_id()
+        image = Image(user_id=user_id, path=filename_with_extension)
+        db.session.add(image)
+        db.session.commit()
+
+        flash('Image uploaded successfully', 'success')
+        return redirect(url_for('index'))
+    
+    return render_template('add_image.html', title='Add Image')
+
+
 @app.route("/", methods=["GET", "POST"])
 def main():
     return redirect(url_for("login"))
@@ -55,7 +63,7 @@ def main():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
-    
+
     form = Login()
 
     if form.validate_on_submit():
@@ -65,17 +73,18 @@ def login():
             login_user(user)
             flash("Login successful", "success")
             return redirect(url_for("index"))
-        
+
         flash("Invalid username or password", "danger")
         return redirect(url_for("login"))
-    
+
     return render_template("login.html", title="Login", form=form)
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
-    
+
     form = Register()
 
     if form.validate_on_submit():
@@ -84,21 +93,20 @@ def register():
         if user:
             flash("Username already exists", "danger")
             return redirect(url_for("login"))
-        
+
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
-        
+
         db.session.add(user)
         db.session.commit()
 
         flash("Registration successful", "success")
         return redirect(url_for("login"))
-    
+
     return render_template("register.html", title="Register", form=form)
+
 
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("login"))
-
-

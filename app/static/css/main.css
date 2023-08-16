@@ -16,6 +16,7 @@
 
 body {
     background-color: var(--primary-color);
+    position: relative;
 }
 
 .roboto-400 {
