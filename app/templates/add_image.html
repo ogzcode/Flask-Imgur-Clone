@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add_image.css') }}">
+{% endblock %}
+
+{% block content %}
+
+{% include "./partials/navbar.html" %}
+<form class="form" action="" enctype="multipart/form-data" method="POST">
+    <input class="form__input" name="img" type="file" />
+    <input class="submit" type="submit" value="Upload" />
+</form>
+
+{% endblock %}

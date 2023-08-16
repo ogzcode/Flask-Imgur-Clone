@@ -1,4 +1,6 @@
 import os
+
+upload_folder = os.path.join(os.getcwd(), 'app', 'static', 'image')
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config():
@@ -6,3 +8,4 @@ class Config():
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    UPLOAD_FOLDER = upload_folder

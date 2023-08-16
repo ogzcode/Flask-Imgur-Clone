@@ -8,9 +8,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 from app import db
 from app.forms import Login, Register
-
-upload_folder = os.path.join(os.getcwd(), 'app', 'static', 'image')
-app.config['UPLOAD_FOLDER'] = upload_folder
+from config import upload_folder
 
 def generate_random_string(length):
     letters = string.ascii_letters

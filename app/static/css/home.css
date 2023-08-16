@@ -1,1 +1,80 @@
 @import "./navbar.css";
+
+.gallery {
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    max-width: 1200px;
+    padding-top: 48px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    max-width: 1200px;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--text-color);
+    padding-bottom: 16px;
+    margin-bottom: 48px;
+}
+
+.image__container {
+    display: flex;
+    gap: 24px;
+}
+
+.image__box {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 320px;
+    height: 320px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.image__box-inline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease-in-out;
+}
+
+.image__btn {
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.btn-share {
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    margin-right: 8px;
+}
+
+.btn-delete {
+    color: var(--primary-color);
+    background-color: var(--emphasis-color);
+}
+
+.image__box:hover .image__box-inline {
+    visibility: visible;
+    opacity: 1;
+}
