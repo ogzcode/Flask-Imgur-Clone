@@ -17,7 +17,6 @@
     width: 100%;
     max-width: 1200px;
     color: var(--text-color);
-    border-bottom: 1px solid var(--text-color);
     padding-bottom: 16px;
     margin-bottom: 24px;
     font-size: 24px;
@@ -26,6 +25,7 @@
 .image__container {
     display: flex;
     gap: 24px;
+    flex-wrap: wrap;
 }
 
 .image__box {

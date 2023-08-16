@@ -9,12 +9,10 @@
 {% include "./partials/add_image.html" %}
 
 <div class="gallery">
-    <h1 class="header roboto-700">Gallery</h1>
-
     {% if images|length > 0 %}
     <div class="image__container">
         {% for image in images %}
-        <div class="image__box" style="background-image: url( {{ url_for('static', filename='image/' + image) }} );">
+        <div class="image__box" style="background-image: url( {{ url_for('static', filename='image/' + image.path) }} );">
             <div class="image__box-inline">
                 <a class="image__btn btn-share roboto-700" href="#">Share</a>
                 <a class="image__btn btn-delete roboto-700" href="{{ url_for('delete_image', filename=image) }}">Delete</a>

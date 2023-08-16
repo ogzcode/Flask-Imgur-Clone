@@ -19,7 +19,9 @@ def generate_random_string(length):
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def index():
-    image_files = os.listdir(upload_folder)
+    user_id = current_user.get_id()
+    image_files = Image.query.filter_by(user_id=user_id).all()
+
     return render_template('home.html', title='Home', images=image_files)
 
 
@@ -71,7 +73,6 @@ def login():
 
         if user and user.check_password(form.password.data):
             login_user(user)
-            flash("Login successful", "success")
             return redirect(url_for("index"))
 
         flash("Invalid username or password", "danger")

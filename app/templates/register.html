@@ -15,7 +15,7 @@
             {{ form.username.label(class="form-label") }}
             {{ form.username(size=20, class="form-control") }}
             {% for error in form.username.errors %}
-                <div>
+                <div class="invalid roboto-400">
                     {{ error }}
                 </div>
             {% endfor %}
@@ -24,7 +24,7 @@
             {{ form.email.label(class="form-label") }}
             {{ form.email(size=20, class="form-control") }}
             {% for error in form.email.errors %}
-                <div>
+                <div class="invalid roboto-400">
                     {{ error }}
                 </div>
             {% endfor %}
@@ -33,8 +33,8 @@
             {{ form.password.label(class="form-label") }}
             {{ form.password(size=20, class="form-control") }}
             {% for error in form.password.errors %}
-                <div>
-                    hello {{ error }}
+                <div class="invalid roboto-400">
+                    {{ error }}
                 </div>
             {% endfor %}
         </div>
@@ -42,4 +42,22 @@
         {{ form.submit(class="submit__btn") }}
     </form>
 </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const usernameInput = document.querySelector("#username"); // Input alanına uygun seçiciyi burada kullanın
+        const passwordInput = document.querySelector("#password");
+        const emailInput = document.querySelector("#email");
+
+        usernameInput.addEventListener("input", hideErrorMessage);
+
+        passwordInput.addEventListener("input", hideErrorMessage);
+
+        emailInput.addEventListener("input", hideErrorMessage);
+
+        function hideErrorMessage() {
+            this.nextElementSibling.style.display = "none"; // Hata mesajını gizle
+        }
+    </script>
 {% endblock %}

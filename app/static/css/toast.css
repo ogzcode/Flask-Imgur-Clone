@@ -20,7 +20,7 @@
 }
 
 .toast--success {
-    background-color: #2ecc71;
+    background-color: var(--secondary-color);
 }
 
 .toast--danger {

@@ -2,7 +2,7 @@
 @import "./toast.css"; 
 
 :root {
-    --primary-color: #4C4C6D;
+    --primary-color: rgb(76, 76, 109);
     --secondary-color: #1B9C85;
     --text-color: #E8F6EF;
     --emphasis-color: #FFE194;

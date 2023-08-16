@@ -15,7 +15,7 @@
             {{ form.username.label(class="form-label") }}
             {{ form.username(size=20, class="form-control") }}
             {% for error in form.username.errors %}
-                <div>
+                <div class="invalid roboto-400">
                     {{ error }}
                 </div>
             {% endfor %}
@@ -24,8 +24,8 @@
             {{ form.password.label(class="form-label") }}
             {{ form.password(size=20, class="form-control") }}
             {% for error in form.password.errors %}
-                <div>
-                    hello {{ error }}
+                <div class="invalid roboto-400">
+                    {{ error }}
                 </div>
             {% endfor %}
         </div>

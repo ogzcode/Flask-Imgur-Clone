@@ -73,3 +73,9 @@
     font-weight: 400;
     cursor: pointer;
 }
+
+.invalid {
+    font-size: 12px;
+    margin-top: 8px;
+    color: #dc3545;
+}
