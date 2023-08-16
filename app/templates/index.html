@@ -11,8 +11,12 @@
 </head>
 
 <body>
+    {% include "./partials/toast_message.html" %}
+    
     {% block content %}
     {% endblock %}
+
+    <script src="{{ url_for('static', filename='js/toast.js') }}"></script>
 </body>
 
 </html>

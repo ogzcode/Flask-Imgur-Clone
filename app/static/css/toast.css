@@ -1,0 +1,38 @@
+.toast__box {
+    position: fixed;
+    width: 300px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    top: 24px;
+    right: 24px;
+    z-index: 9999;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    animation: toast 1s ease-in-out;
+}
+
+.toast__content {
+    font-size: 14px;
+    color: #fff;
+}
+
+.toast--success {
+    background-color: #2ecc71;
+}
+
+.toast--danger {
+    background-color: #e74c3c;
+}
+
+@keyframes toast {
+    0% {
+        transform: translateY(-100px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}

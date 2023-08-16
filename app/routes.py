@@ -47,6 +47,12 @@ def delete_image(filename):
     flash('Image deleted successfully', 'success')
     return redirect(url_for('index'))
 
+
+@app.route("/", methods=["GET", "POST"])
+def main():
+    return redirect(url_for("login"))
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
