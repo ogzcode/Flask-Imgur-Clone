@@ -36,6 +36,11 @@ def delete_image(filename):
 def addImage():
     if request.method == "POST":
         file = request.files['img']
+
+        if file.filename == '' or file.filename.split('.')[-1] not in app.config['UPLOAD_EXTENSIONS']:
+            flash('No image selected for uploading', 'danger')
+            return redirect(url_for('index'))
+        
         filename = generate_random_string(20)
 
         ext = os.path.splitext(file.filename)[1] 
