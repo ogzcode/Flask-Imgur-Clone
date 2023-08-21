@@ -26,6 +26,7 @@ def index():
 
 
 @app.route('/delete/<filename>')
+@login_required
 def delete_image(filename):
     os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     flash('Image deleted successfully', 'success')
@@ -33,6 +34,7 @@ def delete_image(filename):
 
 
 @app.route("/addImage", methods=["POST"])
+@login_required
 def addImage():
     if request.method == "POST":
         file = request.files['img']
@@ -65,6 +67,20 @@ def addImage():
 def main():
     return redirect(url_for("login"))
 
+@app.route("/deleteAll", methods=["GET"])
+def deleteAll():
+    user_id = current_user.get_id()
+    image_files = Image.query.filter_by(user_id=user_id).all()
+
+    for image in image_files:
+        if os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], image.path)):
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], image.path))
+
+        db.session.delete(image)
+        db.session.commit()
+
+    flash("All images deleted successfully", "success")
+    return redirect(url_for("index"))
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

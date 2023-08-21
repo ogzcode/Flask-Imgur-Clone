@@ -17,7 +17,7 @@ function closeModal(event) {
     const input = document.querySelector(".form__input");
     const imagePreview = document.getElementById("imagePreview");
     if (event.target == modal) {
-        modal.style.display = "none";
+        modal.style.top = "-100%";
         input.value = "";
         imagePreview.src = "#";
         imagePreview.style.display = "none";
@@ -25,5 +25,5 @@ function closeModal(event) {
 }
 
 function openModal() {
-    document.querySelector(".form__modal").style.display = "flex";
+    document.querySelector(".form__modal").style.top = "0";
 }

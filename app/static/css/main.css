@@ -6,6 +6,7 @@
     --secondary-color: #1B9C85;
     --text-color: #E8F6EF;
     --emphasis-color: #FFE194;
+    --danger-color: #e74c3c;
 }
 
 * {
@@ -15,7 +16,7 @@
 }
 
 body {
-    background-color: var(--primary-color);
+    background-color: var(--text-color);
     position: relative;
 }
 
