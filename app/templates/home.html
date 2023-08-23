@@ -6,7 +6,6 @@
 
 {% block content %}
 {% include "./partials/navbar.html" %}
-{% include "./partials/add_image.html" %}
 
 <div class="gallery">
     <div>
@@ -16,9 +15,23 @@
     <div class="image__container">
         {% for image in images %}
         <div class="image__box" style="background-image: url( {{ url_for('static', filename='image/' + image.path) }} );">
-            <div class="image__box-inline">
-                <a class="image__btn btn-share roboto-700" href="#">Share</a>
-                <a class="image__btn btn-delete roboto-700" href="{{ url_for('delete_image', filename=image) }}">Delete</a>
+            <div class="image__footer">
+                <p class="image-title roboto-700">{{ image.title }}</p>
+                <div class="image-action roboto-400">
+                    <div>
+                        <button class="btn like--btn"><i class="fa-solid fa-up-long"></i></button>
+                        <span class="image__data">12K</span>
+                        <button class="btn dislike--btn"><i class="fa-solid fa-down-long"></i></button>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-comment"></i>
+                        <span class="image__data">150</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-eye"></i>
+                        <span class="image__data">100</span>
+                    </div>
+                </div>
             </div>
         </div>
         {% endfor %}

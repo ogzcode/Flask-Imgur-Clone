@@ -21,55 +21,62 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    width: 320px;
-    height: 320px;
+    width: 360px;
+    height: 360px;
     border-radius: 10px;
     position: relative;
     overflow: hidden;
 }
 
-.image__box-inline {
+.image__footer {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: all .3s ease-in-out;
+    padding: .5rem 1rem;
+    background-color: var(--primary-color);
 }
 
-.image__btn {
+.image-title {
+    margin-bottom: .75rem;
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.image-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image-action i {
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.image__data{
+    font-size: 12px;
+    padding: 0px 4px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.btn {
     text-decoration: none;
     font-size: 16px;
     cursor: pointer;
-    padding: 8px 16px;
-    border-radius: 5px;
-}
-
-.btn-share {
     color: var(--text-color);
-    background-color: var(--secondary-color);
-    margin-right: 8px;
+    background-color: var(--primary-color);
+    border: none
 }
 
-.btn-delete {
-    color: var(--primary-color);
-    background-color: var(--emphasis-color);
+.like--btn:hover .fa-up-long {
+    color: var(--secondary-color);
 }
 
-.image__box:hover .image__box-inline {
-    visibility: visible;
-    opacity: 1;
-}
-
-.empty__text {
-    color: var(--text-color);
-    font-size: 24px;
+.dislike--btn:hover .fa-down-long {
+    color: var(--danger-color);
 }
 
 .delete__all {

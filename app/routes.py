@@ -16,13 +16,13 @@ def generate_random_string(length):
     return ''.join(random.choice(letters) for _ in range(length))
 
 
-@app.route('/home', methods=['GET', 'POST'])
+@app.get('/home')
 @login_required
 def index():
     user_id = current_user.get_id()
     image_files = Image.query.filter_by(user_id=user_id).all()
 
-    return render_template('home.html', title='Home', images=image_files)
+    return render_template('home.html', title='Home', images=image_files, active='home')
 
 
 @app.route('/delete/<filename>')
@@ -33,11 +33,13 @@ def delete_image(filename):
     return redirect(url_for('index'))
 
 
-@app.route("/addImage", methods=["POST"])
+@app.route("/addImage", methods=["GET", "POST"])
 @login_required
 def addImage():
     if request.method == "POST":
         file = request.files['img']
+        title = request.form['title']
+        description = request.form['description']
 
         if file.filename == '' or file.filename.split('.')[-1] not in app.config['UPLOAD_EXTENSIONS']:
             flash('No image selected for uploading', 'danger')
@@ -53,17 +55,17 @@ def addImage():
         file.save(filepath)
 
         user_id = current_user.get_id()
-        image = Image(user_id=user_id, path=filename_with_extension)
+        image = Image(user_id=user_id, path=filename_with_extension, title=title, content=description)
         db.session.add(image)
         db.session.commit()
 
         flash('Image uploaded successfully', 'success')
         return redirect(url_for('index'))
     
-    return render_template('add_image.html', title='Add Image')
+    return render_template('add_image.html', title='Add Image', active='addImage')
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def main():
     return redirect(url_for("login"))
 
