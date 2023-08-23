@@ -12,18 +12,8 @@ function previewImage(input) {
     }
 }
 
-function closeModal(event) {
-    const modal = document.querySelector(".form__modal");
-    const input = document.querySelector(".form__input");
-    const imagePreview = document.getElementById("imagePreview");
-    if (event.target == modal) {
-        modal.style.top = "-100%";
-        input.value = "";
-        imagePreview.src = "#";
-        imagePreview.style.display = "none";
-    }
-}
-
-function openModal() {
-    document.querySelector(".form__modal").style.top = "0";
-}
+window.addEventListener("load", function () {
+    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+    const formContainer = document.querySelector('.form__container');
+    formContainer.style.height = `calc(100vh - ${navbarHeight}px)`;
+});

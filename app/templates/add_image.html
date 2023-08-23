@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+
+{% block content %}
+{% include "./partials/navbar.html" %}
+
+<div class="form__container roboto-700">
+    <div class="form__content">
+        <form class="form" action="/addImage" enctype="multipart/form-data" method="POST">
+            <div class="input__box">
+                <label class="label" for="title">Title</label>
+                <input class="form__input" name="title" id="title" type="text" placeholder="Title" />
+            </div>
+            <div class="input__box">
+                <label class="label" for="desc">Description</label>
+                <textarea class="form__input" name="description" id="desc" type="text" placeholder="Description"></textarea>
+            </div>
+            <input class="form__input" name="img" type="file" onchange="previewImage(this);" />
+            <div class="submit__box">
+                <input class="submit" type="submit" value="Upload" />
+            </div>
+        </form>
+        <img id="imagePreview" class="image-preview" src="#" alt="Image Preview" />
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/add_image.js') }}"></script>
+{% endblock %}
+```
