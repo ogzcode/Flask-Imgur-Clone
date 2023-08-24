@@ -1,35 +1,48 @@
 {% extends "index.html" %}
 
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<style>
+    .image__box {
+        width: 360px;
+        padding: 0;
+    }
+
+    .fs-7 {
+        font-size: .8rem;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-{% include "./partials/navbar.html" %}
 
-<div class="gallery">
+<div class="container">
     <div>
         <a class="delete__all" href="{{ url_for('deleteAll') }}">Delete All</a>
     </div>
     {% if images|length > 0 %}
-    <div class="image__container">
+    <div class="row d-flex p-5">
         {% for image in images %}
-        <div class="image__box" style="background-image: url( {{ url_for('static', filename='image/' + image.path) }} );">
-            <div class="image__footer">
-                <p class="image-title roboto-700">{{ image.title }}</p>
-                <div class="image-action roboto-400">
+        <div class="card image__box m-3 shadow-sm">
+            <img src="{{ url_for('static', filename='image/' + image.path) }}" alt="image" class="card-img-top" lazy>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <p class="fs-6 my-auto">{{ image.title }}</p>
+                    <a href="{{ url_for('singleImage', image_id=image.id) }}" class="btn btn-warning fs-7"><i
+                            class="fa-solid fa-right-long"></i></a>
+                </div>
+                <div class="d-flex align-items-center justify-content-between roboto-400 bg-body-tertiary p-2 rounded">
                     <div>
-                        <button class="btn like--btn"><i class="fa-solid fa-up-long"></i></button>
-                        <span class="image__data">12K</span>
-                        <button class="btn dislike--btn"><i class="fa-solid fa-down-long"></i></button>
+                        <button class="btn"><i class="fa-solid fa-up-long fs-7"></i></button>
+                        <span class="fs-7 text-decoration-none">12K</span>
+                        <button class="btn dislike--btn"><i class="fa-solid fa-down-long fs-7"></i></button>
                     </div>
                     <div>
-                        <i class="fa-solid fa-comment"></i>
-                        <span class="image__data">150</span>
+                        <i class="fa-solid fa-comment fs-7"></i>
+                        <span class="fs-7">150</span>
                     </div>
                     <div>
-                        <i class="fa-solid fa-eye"></i>
-                        <span class="image__data">100</span>
+                        <i class="fa-solid fa-eye fs-7"></i>
+                        <span class="fs-7">100</span>
                     </div>
                 </div>
             </div>
@@ -40,8 +53,4 @@
     <h1 class="empty__text roboto-400">Image will be render here...</h1>
     {% endif %}
 </div>
-{% endblock %}
-
-{% block script %}
-    <script src="{{ url_for('static', filename='js/add_image.js') }}"></script>
 {% endblock %}
