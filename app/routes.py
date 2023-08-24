@@ -65,6 +65,11 @@ def addImage():
     return render_template('add_image.html', title='Add Image', active='addImage')
 
 
+@app.route("/image/<image_id>", methods=["GET"])
+def singleImage(image_id):
+    image = Image.query.filter_by(id=image_id).first()
+    return render_template("single_image.html", title="Image", image=image)
+
 @app.route("/")
 def main():
     return redirect(url_for("login"))

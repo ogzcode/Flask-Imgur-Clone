@@ -1,0 +1,102 @@
+{% extends "index.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/single_image.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container pt-5 w-50 position-relative">
+    <div class="row">
+        <div class="col">
+            <img src="{{ url_for('static', filename='image/' + image.path) }}" alt="image" class="img-fluid rounded-4">
+        </div>
+    </div>
+    <div class="row mt-2">
+        <h4 class="mb-3">{{ image.title }}</h4>
+        <p class="mb-3">{{ image.content }}</p>
+    </div>
+    <div class="row mt-2">
+        <div class="col">
+            <form class="">
+                <div class="form-group mb-3">
+                    <label for="comment">Comment:</label>
+                    <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </div>
+            </form>
+            <div class="mt-5">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>Ogzcode</strong> - 12.10.2023
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
+                            Veniam, commodi odit fugit quaerat ipsam consectetur officia 
+                            dignissimos hic distinctio harum optio ad odio animi magnam 
+                            nostrum ducimus sequi aliquam molestias.
+                        </p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>Ogzcode</strong> - 12.10.2023
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
+                            Veniam, commodi odit fugit quaerat ipsam consectetur officia 
+                            dignissimos hic distinctio harum optio ad odio animi magnam 
+                            nostrum ducimus sequi aliquam molestias.
+                        </p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>Ogzcode</strong> - 12.10.2023
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
+                            Veniam, commodi odit fugit quaerat ipsam consectetur officia 
+                            dignissimos hic distinctio harum optio ad odio animi magnam 
+                            nostrum ducimus sequi aliquam molestias.
+                        </p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>Ogzcode</strong> - 12.10.2023
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
+                            Veniam, commodi odit fugit quaerat ipsam consectetur officia 
+                            dignissimos hic distinctio harum optio ad odio animi magnam 
+                            nostrum ducimus sequi aliquam molestias.
+                        </p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>Ogzcode</strong> - 12.10.2023
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
+                            Veniam, commodi odit fugit quaerat ipsam consectetur officia 
+                            dignissimos hic distinctio harum optio ad odio animi magnam 
+                            nostrum ducimus sequi aliquam molestias.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
