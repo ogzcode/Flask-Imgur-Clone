@@ -6,13 +6,13 @@
 
 
 {% block content %}
-<div class="auth__container roboto-700">
-    <form action="" method="POST" class="form">
-        <h1 class="header">Register</h1>
+<div class="container min-vh-100 d-flex justify-content-center align-items-center">
+    <form action="" method="POST" class="form w-50 shadow p-5 rounded-3">
+        <h1 class="text-center text-secondary mb-5">Register</h1>
         {{ form.hidden_tag() }}
 
-        <div class="input__box">
-            {{ form.username.label(class="form-label") }}
+        <div class="mb-2">
+            {{ form.username.label(class="form-label fs-6") }}
             {{ form.username(size=20, class="form-control") }}
             {% for error in form.username.errors %}
                 <div class="invalid roboto-400">
@@ -20,7 +20,7 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="input__box">
+        <div class="mb-2">
             {{ form.email.label(class="form-label") }}
             {{ form.email(size=20, class="form-control") }}
             {% for error in form.email.errors %}
@@ -29,7 +29,7 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="input__box">
+        <div class="mb-2">
             {{ form.password.label(class="form-label") }}
             {{ form.password(size=20, class="form-control") }}
             {% for error in form.password.errors %}
@@ -39,7 +39,7 @@
             {% endfor %}
         </div>
         <a href="{{ url_for('login') }}" class="link">Do you have an account ?</a>
-        {{ form.submit(class="submit__btn") }}
+        {{ form.submit(class="btn btn-success w-100 mt-4") }}
     </form>
 </div>
 {% endblock %}

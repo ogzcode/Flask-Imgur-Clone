@@ -28,6 +28,10 @@ def index():
 @app.route('/delete/<filename>')
 @login_required
 def delete_image(filename):
+    image = Image.query.filter_by(path=filename).first()
+    db.session.delete(image)
+    db.session.commit()
+    
     os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     flash('Image deleted successfully', 'success')
     return redirect(url_for('index'))
