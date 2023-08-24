@@ -1,82 +1,27 @@
-.navbar {
-    padding: 16px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--primary-color);
+.navbar-collapse {
+    flex-grow: 0 !important;
 }
 
-.navbar__brand {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--primary-color);
-    text-decoration: none;
+.nav-link:not(:last-child):hover {
+    opacity: .8;
 }
 
-.navbar__brand span {
-    color: var(--secondary-color);
+.nav-link:last-child {
+    padding: .5rem 1rem !important;
 }
 
-.navbar__collapse ul {
-    display: flex;
-    list-style: none;
+.nav-link:last-child:hover{
+    background-color: var(--danger) !important;
+    color: white;
 }
 
-.navbar__collapse li:not(:last-child) {
-    margin-right: 24px;
-    cursor: pointer;
-    padding-bottom: 4px;
-    border-bottom: 2px solid transparent;
-}
+@media screen and (max-width: 992px) {
+    .navbar-collapse {
+        text-align: left !important;
+    }
 
-.navbar__collapse li:hover {
-    border-bottom-color: var(--primary-color);
-}
-
-.navbar__collapse li a,
-.navbar__collapse li button {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--primary-color);
-    text-decoration: none;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-.navbar__collapse li i {
-    margin-right: 8px;
-    font-size: 17px;
-    color: var(--primary-color)
-}
-
-.logout__btn {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--primary-color);
-    text-decoration: none;
-    border: 1px solid var(--primary-color);
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: all 0.3s ease-in-out;
-}
-
-.logout__btn i {
-    margin-right: 0px !important;
-    margin-left: 8px;
-}
-
-.logout__btn:hover {
-    background-color: var(--primary-color);
-    color: var(--text-color) !important;
-}
-
-.logout__btn:hover i {
-    color: var(--text-color) !important;
-}
-
-@media screen and (min-width: 768px) {
-    .toggle__btn {
-        display: none;
+    .nav-link:last-child {
+        display: inline !important;
+        width: auto !important;
     }
 }

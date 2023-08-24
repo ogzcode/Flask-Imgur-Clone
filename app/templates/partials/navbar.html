@@ -1,25 +1,33 @@
-<nav class="navbar">
-    <h1 class="navbar__brand roboto-700">Pic<span>gur</span></h1>
-    <button class="toggle__btn">
-        <i class="fa-sharp fa-solid fa-bars"></i>
-    </button>
-    <div class="navbar__collapse roboto-400">
-        <ul>
-            <li>
-                <i class="fa-solid fa-house"></i>
-                <a href="{{ url_for('index') }}">Home</a>
-            </li>
-            <li>
-                <i class="fa-solid fa-file-circle-plus"></i>
-                <a href="{{ url_for('addImage') }}">Add Image</a>
-            </li>
-            <li>
-                <i class="fa-solid fa-gear"></i>
-                <a href="#">Settings</a>
-            </li>
-            <li>
-                <a href="{{ url_for('logout') }}" class="logout__btn">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
-            </li>
-        </ul>
+{%block style %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+
+{% endblock %}
+
+
+<nav class="navbar bg-body-secondary">
+    <div class="container-fluid mx-4">
+        <a class="navbar-brand fs-3 fw-bold text-dark" href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='svg/logo.svg') }}" alt="Logo" width="48">
+            Pic<span class="text-success">gur</span></a>
+        <div class="d-flex align-items-center">
+            <a class="nav-link fw-medium mx-3 {% if active == 'home' %} border-bottom border-2 border-dark {% endif %}"
+                aria-current="page" href="{{ url_for('index') }}">
+                <i class="fa-solid fa-house me-2"></i> Home
+            </a>
+            <a class="nav-link fw-medium mx-3 {% if active == 'addImage' %} border-bottom border-2 border-dark {% endif %}"
+                href="{{ url_for('addImage') }}">
+                <i class="fa-solid fa-file-circle-plus me-2"></i>
+                Add Image
+            </a>
+            <a class="nav-link fw-medium mx-3 {% if active == 'settings' %} border-bottom border-2 border-dark {% endif %}"
+                href="#">
+                <i class="fa-solid fa-gear me-2"></i>
+                Settings
+            </a>
+            <a class="nav-link fw-medium mx-3 rounded" href="{{ url_for('logout') }}">
+                <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+            </a>
+        </div>
     </div>
 </nav>
