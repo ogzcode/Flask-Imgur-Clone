@@ -1,0 +1,64 @@
+{% extends "index.html" %}
+
+{% block content %}
+{% include 'partials/delete_modal.html' %}
+
+<div class="container-fluid bg-light p-5">
+    <div class="row w-50 mx-auto">
+        <div class="col bg-white p-5 shadow-sm rounded-3">
+            <h4 class="text-dark-emphasis mb-2">User Information</h4>
+            <form action="/editUserInfo" method="POST">
+                <div class="mb-3">
+                    <label>Username</label>
+                    <input type="text" class="form-control" placeholder="Username" required name="username">
+                </div>
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" class="form-control" placeholder="Email" required name="email">
+                </div>
+                <div class="mb-3">
+                    <label>Old Password</label>
+                    <input type="password" class="form-control" placeholder="Password" name="old_password">
+                </div>
+                <div class="mb-3">
+                    <label>New Password</label>
+                    <input type="password" class="form-control" placeholder="Password" name="new_password">
+                </div>
+                <div class="mt-4 text-center">
+                    <button type="submit" class="btn btn-success w-50">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row w-50 mx-auto mt-5">
+        <div class="col bg-white p-5 shadow-sm rounded">
+            <h4 class="text-dark-emphasis mb-2">About</h4>
+            <form action="/about" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label>Website</label>
+                    <input type="text" class="form-control" placeholder="Website" name="website">
+                </div>
+                <div class="mb-3">
+                    <label>Location</label>
+                    <input type="text" class="form-control" placeholder="Location" name="Location">
+                </div>
+                <div class="mb-3">
+                    <label>Bio</label>
+                    <textarea class="form-control" placeholder="Bio" name="bio"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label>Profile Picture</label>
+                    <input type="file" class="form-control" name="profile_picture">
+                </div>
+                <div class="mt-4 text-center">
+                    <button type="submit" class="btn btn-success w-50">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row w-50 mt-5 mx-auto text-center">
+        <button href="#" class="btn btn-outline-danger w-25" data-bs-toggle="modal"
+            data-bs-target="#deleteConfirmationModal">Delete Account</button>
+    </div>
+</div>
+{% endblock %}

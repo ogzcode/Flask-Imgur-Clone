@@ -74,6 +74,12 @@ def singleImage(image_id):
     image = Image.query.filter_by(id=image_id).first()
     return render_template("single_image.html", title="Image", image=image)
 
+
+@app.route("/settings")
+@login_required
+def settings():
+    return render_template("settings.html", title="Settings", active="settings")
+
 @app.route("/")
 def main():
     return redirect(url_for("login"))
@@ -142,4 +148,9 @@ def register():
 @app.route("/logout")
 def logout():
     logout_user()
+    return redirect(url_for("login"))
+
+@app.route("/deleteAccount", methods=["POST"])
+def deleteAccount():
+    flash("Account deleted successfully", "success")
     return redirect(url_for("login"))
