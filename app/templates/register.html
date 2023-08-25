@@ -13,7 +13,7 @@
 
         <div class="mb-2">
             {{ form.username.label(class="form-label fs-6") }}
-            {{ form.username(size=20, class="form-control") }}
+            {{ form.username(size=20, class="form-control", required="required") }}
             {% for error in form.username.errors %}
                 <div class="invalid roboto-400">
                     {{ error }}
@@ -22,7 +22,7 @@
         </div>
         <div class="mb-2">
             {{ form.email.label(class="form-label") }}
-            {{ form.email(size=20, class="form-control") }}
+            {{ form.email(size=20, class="form-control", required="required") }}
             {% for error in form.email.errors %}
                 <div class="invalid roboto-400">
                     {{ error }}
@@ -31,7 +31,7 @@
         </div>
         <div class="mb-2">
             {{ form.password.label(class="form-label") }}
-            {{ form.password(size=20, class="form-control") }}
+            {{ form.password(size=20, class="form-control", required="required") }}
             {% for error in form.password.errors %}
                 <div class="invalid roboto-400">
                     {{ error }}

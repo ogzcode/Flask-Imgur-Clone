@@ -7,14 +7,14 @@
     <div class="row w-50 mx-auto">
         <div class="col bg-white p-5 shadow-sm rounded-3">
             <h4 class="text-dark-emphasis mb-2">User Information</h4>
-            <form action="/editUserInfo" method="POST">
+            <form action="/editUser" method="POST">
                 <div class="mb-3">
                     <label>Username</label>
-                    <input type="text" class="form-control" placeholder="Username" required name="username">
+                    <input type="text" class="form-control" placeholder="Username" required name="username" value="{{ user.username}}">
                 </div>
                 <div class="mb-3">
                     <label>Email</label>
-                    <input type="email" class="form-control" placeholder="Email" required name="email">
+                    <input type="email" class="form-control" placeholder="Email" required name="email" value="{{ user.email }}">
                 </div>
                 <div class="mb-3">
                     <label>Old Password</label>
@@ -33,22 +33,22 @@
     <div class="row w-50 mx-auto mt-5">
         <div class="col bg-white p-5 shadow-sm rounded">
             <h4 class="text-dark-emphasis mb-2">About</h4>
-            <form action="/about" method="POST" enctype="multipart/form-data">
+            <form action="/editAbout" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label>Website</label>
-                    <input type="text" class="form-control" placeholder="Website" name="website">
+                    <input type="text" class="form-control" placeholder="Website" name="website" value="{{ about.website }}">
                 </div>
                 <div class="mb-3">
                     <label>Location</label>
-                    <input type="text" class="form-control" placeholder="Location" name="Location">
+                    <input type="text" class="form-control" placeholder="Location" name="location" value="{{ about.location }}">
                 </div>
                 <div class="mb-3">
                     <label>Bio</label>
-                    <textarea class="form-control" placeholder="Bio" name="bio"></textarea>
+                    <textarea class="form-control" placeholder="Bio" name="about">{{ about.website }}</textarea>
                 </div>
                 <div class="mb-3">
                     <label>Profile Picture</label>
-                    <input type="file" class="form-control" name="profile_picture">
+                    <input type="file" class="form-control" name="profile_pic">
                 </div>
                 <div class="mt-4 text-center">
                     <button type="submit" class="btn btn-success w-50">Save</button>

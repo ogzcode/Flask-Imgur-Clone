@@ -5,7 +5,7 @@ import os
 import string
 import random
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Image
+from app.models import User, Image, UserAbout
 from app import db
 from app.forms import Login, Register
 from config import upload_folder
@@ -15,6 +15,9 @@ def generate_random_string(length):
     letters = string.ascii_letters
     return ''.join(random.choice(letters) for _ in range(length))
 
+@app.route("/")
+def main():
+    return redirect(url_for("login"))
 
 @app.get('/home')
 @login_required
@@ -23,19 +26,6 @@ def index():
     image_files = Image.query.filter_by(user_id=user_id).all()
 
     return render_template('home.html', title='Home', images=image_files, active='home')
-
-
-@app.route('/delete/<filename>')
-@login_required
-def delete_image(filename):
-    image = Image.query.filter_by(path=filename).first()
-    db.session.delete(image)
-    db.session.commit()
-    
-    os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    flash('Image deleted successfully', 'success')
-    return redirect(url_for('index'))
-
 
 @app.route("/addImage", methods=["GET", "POST"])
 @login_required
@@ -74,20 +64,89 @@ def singleImage(image_id):
     image = Image.query.filter_by(id=image_id).first()
     return render_template("single_image.html", title="Image", image=image)
 
+@app.route('/delete/<filename>')
+@login_required
+def delete_image(filename):
+    image = Image.query.filter_by(path=filename).first()
+    db.session.delete(image)
+    db.session.commit()
+    
+    os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    flash('Image deleted successfully', 'success')
+    return redirect(url_for('index'))
+
 
 @app.route("/settings")
 @login_required
 def settings():
-    return render_template("settings.html", title="Settings", active="settings")
+    user = User.query.filter_by(id=current_user.get_id()).first()
+    about = UserAbout.query.filter_by(user_id=current_user.get_id()).first()
+    
+    return render_template("settings.html", title="Settings", active="settings", user=user, about=about)
 
-@app.route("/")
-def main():
-    return redirect(url_for("login"))
+@app.route("/editUser", methods=["POST"])
+@login_required
+def editUser():
+    user = User.query.filter_by(id=current_user.get_id()).first()
+
+    user.username = request.form["username"] if request.form["username"] != "" else user.username
+    user.email = request.form["email"] if request.form["email"] != "" else user.email
+
+    if request.form["new_password"] != "":
+        if user.check_password(request.form["old_password"]):
+            user.set_password(request.form["new_password"])
+        else:
+            flash("Incorrect password", "danger")
+            return redirect(url_for("settings"))
+        
+    db.session.commit()
+    flash("User updated successfully", "success")
+    return redirect(url_for("settings"))
+
+@app.route("/editAbout", methods=["POST"])
+@login_required
+def editAbout():
+    user = User.query.filter_by(id=current_user.get_id()).first()
+    about = UserAbout.query.filter_by(user_id=user.id).first()
+
+    profile_pic = request.files["profile_pic"]
+
+    if profile_pic.filename != "":
+        filename = generate_random_string(20)
+
+        ext = os.path.splitext(profile_pic.filename)[1] 
+        filename_with_extension = filename + ext
+
+        filepath = os.path.join(
+            app.config['UPLOAD_FOLDER'], filename_with_extension)
+        profile_pic.save(filepath)
+
+        user.profile_pic = filename_with_extension
+
+    if not about:
+        about = UserAbout(user_id=current_user.get_id())
+
+        about.about = request.form["about"] if request.form["about"] != "" else about.about
+        about.website = request.form["website"] if request.form["website"] != "" else about.website
+        about.location = request.form["location"] if request.form["location"] != "" else about.location
+
+        db.session.add(about)
+    else:
+        about.about = request.form["about"] if request.form["about"] != "" else about.about
+        about.website = request.form["website"] if request.form["website"] != "" else about.website
+        about.location = request.form["location"] if request.form["location"] != "" else about.location
+
+    
+    db.session.commit()
+
+    flash("About updated successfully", "success")
+
+    return redirect(url_for("settings"))
+
 
 @app.route("/deleteAll", methods=["GET"])
 def deleteAll():
-    user_id = current_user.get_id()
-    image_files = Image.query.filter_by(user_id=user_id).all()
+    image_files = Image.query.filter_by().all()
 
     for image in image_files:
         if os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], image.path)):
@@ -99,6 +158,13 @@ def deleteAll():
     flash("All images deleted successfully", "success")
     return redirect(url_for("index"))
 
+
+
+
+
+
+
+#Auth routes
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
@@ -151,6 +217,14 @@ def logout():
     return redirect(url_for("login"))
 
 @app.route("/deleteAccount", methods=["POST"])
+@login_required
 def deleteAccount():
+    user_id = current_user.get_id()
+    user = User.query.filter_by(id=user_id).first()
+
+    logout_user()
+    db.session.delete(user)
+    db.session.commit()
+
     flash("Account deleted successfully", "success")
-    return redirect(url_for("login"))
+    return redirect(url_for("register"))
