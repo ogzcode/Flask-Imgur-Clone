@@ -1,8 +1,8 @@
-const toast = document.querySelector('.toast__box');
+const toast = document.querySelector('.toast');
 
 if (toast) {
     setTimeout(() => {
-        toast.style.display = 'none';
+        toast.classList.remove('show');
     }
     , 3000);
 }
