@@ -11,23 +11,32 @@
             <img src="{{ url_for('static', filename='svg/logo.svg') }}" alt="Logo" width="48">
             Pic<span class="text-success">gur</span></a>
         <div class="d-flex align-items-center">
-            <a class="nav-link fw-medium mx-3 {% if active == 'home' %} border-bottom border-2 border-dark {% endif %}"
-                aria-current="page" href="{{ url_for('index') }}">
-                <i class="fa-solid fa-house me-2"></i> Home
-            </a>
-            <a class="nav-link fw-medium mx-3 {% if active == 'addImage' %} border-bottom border-2 border-dark {% endif %}"
-                href="{{ url_for('addImage') }}">
-                <i class="fa-solid fa-file-circle-plus me-2"></i>
-                Add Image
-            </a>
-            <a class="nav-link fw-medium mx-3 {% if active == 'settings' %} border-bottom border-2 border-dark {% endif %}"
-                href="{{ url_for('settings') }}">
-                <i class="fa-solid fa-gear me-2"></i>
-                Settings
-            </a>
-            <a class="nav-link fw-medium mx-3 rounded" href="{{ url_for('logout') }}">
-                <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
-            </a>
+            {% if current_user.is_anonymous %}
+                <a href="{{ url_for('login') }}" class="btn btn-outline-dark mx-3 rounded-pill">
+                    <i class="fa-solid fa-sign-in me-2"></i> Login
+                </a>
+                <a href="{{ url_for('register') }}" class="btn btn-outline-dark mx-3 rounded-pill">
+                    <i class="fa-solid fa-user-plus me-2"></i> Sign Up
+                </a>
+            {% else %}
+                <a class="nav-link fw-medium mx-3 {% if active == 'home' %} border-bottom border-2 border-dark {% endif %}"
+                    aria-current="page" href="{{ url_for('index') }}">
+                    <i class="fa-solid fa-house me-2"></i> Home
+                </a>
+                <a class="nav-link fw-medium mx-3 {% if active == 'addImage' %} border-bottom border-2 border-dark {% endif %}"
+                    href="{{ url_for('addImage') }}">
+                    <i class="fa-solid fa-file-circle-plus me-2"></i>
+                    Add Image
+                </a>
+                <a class="nav-link fw-medium mx-3 {% if active == 'settings' %} border-bottom border-2 border-dark {% endif %}"
+                    href="{{ url_for('settings') }}">
+                    <i class="fa-solid fa-gear me-2"></i>
+                    Settings
+                </a>
+                <a class="nav-link fw-medium mx-3 rounded" href="{{ url_for('logout') }}">
+                    <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+                </a>
+            {% endif %}
         </div>
     </div>
 </nav>
