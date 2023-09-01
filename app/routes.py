@@ -76,6 +76,7 @@ def delete_image(filename):
     return redirect(url_for('index'))
 
 
+
 @app.route("/settings")
 @login_required
 def settings():
@@ -159,7 +160,11 @@ def deleteAll():
     return redirect(url_for("index"))
 
 
+@app.route("/allImages")
+def allImages():
+    image_files = Image.query.filter_by().all()
 
+    return render_template("all_images.html", title="All Images", images=image_files, active="allImages")
 
 
 
