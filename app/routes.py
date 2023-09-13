@@ -155,6 +155,10 @@ def deleteAll():
         if os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], image.path)):
             os.remove(os.path.join(app.config['UPLOAD_FOLDER'], image.path))
 
+        comments = Comment.query.filter_by(image_id=image.id).all()
+        for c in comments:
+            db.session.delete(c)
+
         db.session.delete(image)
         db.session.commit()
 
@@ -183,6 +187,17 @@ def addComment():
     flash("Comment added successfully", "success")
     return redirect(url_for("singleImage", image_id=image_id))
 
+@app.route("/deleteComment/<comment_id>", methods=["GET"])
+@login_required
+def deleteComment(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
+    image_id = comment.image_id
+
+    db.session.delete(comment)
+    db.session.commit()
+
+    flash("Comment deleted successfully", "success")
+    return redirect(url_for("singleImage", image_id=image_id))
 
 #Auth routes
 @app.route("/login", methods=["GET", "POST"])

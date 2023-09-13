@@ -40,10 +40,10 @@
                 <div class="card-header d-flex justify-content-between">
                     <div>
                         <strong class="text-dark">{{ comment.user.username }}</strong> - <small
-                            class="fst-italic text-body-tertiary">{{ comment.created.strftime("%d.%m.%Y") }}</small>
+                            class="fst-italic text-body-tertiary" style="font-size: 12px;">{{ comment.created.strftime("%d.%m.%Y") }}</small>
                     </div>
                     {% if comment.user.id == current_user.get_id()|int() %}
-                        <a href="#" class="text-danger">
+                        <a href="{{ url_for('deleteComment', comment_id=comment.id) }}" class="text-danger">
                             <i class="fa-solid fa-trash-can"></i>
                         </a>
                     {% endif %}
