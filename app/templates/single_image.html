@@ -12,89 +12,52 @@
             <img src="{{ url_for('static', filename='image/' + image.path) }}" alt="image" class="img-fluid rounded-4">
         </div>
     </div>
-    <div class="row mt-2">
-        <h4 class="mb-3">{{ image.title }}</h4>
-        <p class="mb-3">{{ image.content }}</p>
+    <div class="row mt-3">
+        <strong class="mb-3 fs-2 text-dark">{{ image.title }}</strong>
+        <small class="mb-3 text-secondary">{{ image.content }}</small>
     </div>
-    <div class="row mt-2">
+    <div class="row mt-2 mb-5">
         <div class="col">
-            <form class="">
+            {% if not comment_show %}
+            <form class="" method="POST" action="/addComment">
                 <div class="form-group mb-3">
-                    <label for="comment">Comment:</label>
+                    <label for="comment" class="form-label text-secondary">Comment</label>
                     <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
                 </div>
+                <input type="hidden" name="image_id" value="{{ image.id }}">
                 <div class="text-end">
                     <button type="submit" class="btn btn-primary">Submit</button>
-
                 </div>
             </form>
-            <div class="mt-5">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <strong>Ogzcode</strong> - 12.10.2023
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% if comments %}
+            {% for comment in comments %}
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between">
+                    <div>
+                        <strong class="text-dark">{{ comment.user.username }}</strong> - <small
+                            class="fst-italic text-body-tertiary">{{ comment.created.strftime("%d.%m.%Y") }}</small>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                            Veniam, commodi odit fugit quaerat ipsam consectetur officia 
-                            dignissimos hic distinctio harum optio ad odio animi magnam 
-                            nostrum ducimus sequi aliquam molestias.
-                        </p>
-                    </div>
+                    {% if comment.user.id == current_user.get_id()|int() %}
+                        <a href="#" class="text-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                    {% endif %}
                 </div>
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <strong>Ogzcode</strong> - 12.10.2023
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                            Veniam, commodi odit fugit quaerat ipsam consectetur officia 
-                            dignissimos hic distinctio harum optio ad odio animi magnam 
-                            nostrum ducimus sequi aliquam molestias.
-                        </p>
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <strong>Ogzcode</strong> - 12.10.2023
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                            Veniam, commodi odit fugit quaerat ipsam consectetur officia 
-                            dignissimos hic distinctio harum optio ad odio animi magnam 
-                            nostrum ducimus sequi aliquam molestias.
-                        </p>
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <strong>Ogzcode</strong> - 12.10.2023
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                            Veniam, commodi odit fugit quaerat ipsam consectetur officia 
-                            dignissimos hic distinctio harum optio ad odio animi magnam 
-                            nostrum ducimus sequi aliquam molestias.
-                        </p>
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <strong>Ogzcode</strong> - 12.10.2023
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                            Veniam, commodi odit fugit quaerat ipsam consectetur officia 
-                            dignissimos hic distinctio harum optio ad odio animi magnam 
-                            nostrum ducimus sequi aliquam molestias.
-                        </p>
-                    </div>
+                <div class="card-body">
+                    <p class="card-text text-dark-emphasis">
+                        {{ comment.content }}
+                    </p>
                 </div>
             </div>
+            {% endfor %}
+            {% else %}
+            <p class="card px-2 py-4 text-bg-light text-secondary">No comments yet.</p>
+            {% endif %}
         </div>
     </div>
 </div>

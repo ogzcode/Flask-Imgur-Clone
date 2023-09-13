@@ -1,6 +1,7 @@
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from datetime import datetime
 
 @login.user_loader
 def load_user(id):
@@ -43,3 +44,17 @@ class Image(db.Model):
 
     def __repr__(self):
         return '<Image {}>'.format(self.path)
+    
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text)
+    created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    image_id = db.Column(db.Integer, db.ForeignKey('image.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
+    user = db.relationship("User", backref="comments")
+
+    def __repr__(self):
+        return '<Comment {}>'.format(self.content)
+    
+

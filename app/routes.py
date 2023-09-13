@@ -5,7 +5,7 @@ import os
 import string
 import random
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Image, UserAbout
+from app.models import User, Image, UserAbout, Comment
 from app import db
 from app.forms import Login, Register
 from config import upload_folder
@@ -62,7 +62,9 @@ def addImage():
 @app.route("/image/<image_id>", methods=["GET"])
 def singleImage(image_id):
     image = Image.query.filter_by(id=image_id).first()
-    return render_template("single_image.html", title="Image", image=image)
+    comment = Comment.query.filter_by(image_id=image_id).all()
+
+    return render_template("single_image.html", title="Image", image=image, comment_show=int(image.user_id) == int(current_user.get_id()), comments=comment)
 
 @app.route('/delete/<filename>')
 @login_required
@@ -164,9 +166,22 @@ def deleteAll():
 def allImages():
     image_files = Image.query.filter_by().all()
 
-    return render_template("all_images.html", title="All Images", images=image_files, active="allImages")
+    return render_template("all_images.html", title="All Images", images=image_files)
 
 
+@app.route("/addComment", methods=["POST"])
+@login_required
+def addComment():
+    content = request.form["comment"]
+    image_id = request.form["image_id"]
+
+    comment = Comment(user_id=current_user.get_id(), image_id=image_id, content=content)
+    
+    db.session.add(comment)
+    db.session.commit()
+
+    flash("Comment added successfully", "success")
+    return redirect(url_for("singleImage", image_id=image_id))
 
 
 #Auth routes
