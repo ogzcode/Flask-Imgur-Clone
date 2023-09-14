@@ -2,6 +2,12 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
 
+<style>
+    .auth-btn {
+        width: 120px;
+    }
+</style>
+
 {% endblock %}
 
 
@@ -12,10 +18,10 @@
             Pic<span class="text-success">gur</span></a>
         <div class="d-flex align-items-center">
             {% if current_user.is_anonymous %}
-                <a href="{{ url_for('login') }}" class="btn btn-outline-dark mx-3 rounded-pill">
+                <a href="{{ url_for('login') }}" class="btn btn-outline-dark mx-3 rounded-pill auth-btn">
                     <i class="fa-solid fa-sign-in me-2"></i> Login
                 </a>
-                <a href="{{ url_for('register') }}" class="btn btn-outline-dark mx-3 rounded-pill">
+                <a href="{{ url_for('register') }}" class="btn btn-outline-dark mx-3 rounded-pill auth-btn">
                     <i class="fa-solid fa-user-plus me-2"></i> Sign Up
                 </a>
             {% else %}
