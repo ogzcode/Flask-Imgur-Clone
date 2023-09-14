@@ -17,6 +17,39 @@
         height: 240px !important;
         object-fit: cover;
     }
+
+    .fa-eye {
+        color: #38bdf8;
+    }
+    .fa-comment {
+        color: #f87171;
+    }
+    .fa-up-long {
+        color: #10b981;
+    }
+    .fa-down-long {
+        color: #ef4444;
+    }
+    .btn,
+    .btn:hover,
+    .btn:focus,
+    .btn:active {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+
+    }
+
+    .see-btn {
+        color: #f59e0b;
+        border-radius: 4px;
+        border: 1px solid #f59e0b !important;
+    }
+
+    .see-btn:hover {
+        color: #fff;
+        background-color: #d97706;
+    }
 </style>
 {% endblock %}
 
@@ -28,25 +61,25 @@
             <img src="{{ url_for('static', filename='image/' + image.path) }}" alt="image" class="img" lazy>
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <p class="fs-6 my-auto">{{ image.title }}</p>
+                    <p class="fs-6 my-auto fw-semibold text-dark">{{ image.title }}</p>
                     <div>
-                        <a href="{{ url_for('singleImage', image_id=image.id) }}" class="btn btn-warning fs-7">
+                        <a href="{{ url_for('singleImage', image_id=image.id) }}" class="btn see-btn fs-7">
                             <i class="fa-solid fa-right-long"></i></a>
                     </div>
                 </div>
                 <div class="d-flex align-items-center justify-content-between roboto-400 bg-body-tertiary p-2 rounded">
                     <div>
-                        <button class="btn"><i class="fa-solid fa-up-long fs-7"></i></button>
-                        <span class="fs-7 text-decoration-none">12K</span>
-                        <button class="btn dislike--btn"><i class="fa-solid fa-down-long fs-7"></i></button>
+                        <button class="btn text-secondary">
+                            <i class="fa-regular fa-star"></i>
+                        </button>
                     </div>
                     <div>
-                        <i class="fa-solid fa-comment fs-7"></i>
-                        <span class="fs-7">150</span>
+                        <i class="fa-solid fa-comment"></i>
+                        <span class="ms-1 text-secondary">{{ image.comment_count }}</span>
                     </div>
                     <div>
-                        <i class="fa-solid fa-eye fs-7"></i>
-                        <span class="fs-7">100</span>
+                        <i class="fa-solid fa-eye"></i>
+                        <span class="ms-1 text-secondary">{{ image.view_count }}</span>
                     </div>
                 </div>
             </div>
@@ -54,9 +87,4 @@
         {% endfor %}
     </div>
 </div>
-{% endblock %}
-
-
-{% block script %}
-
 {% endblock %}

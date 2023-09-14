@@ -64,6 +64,10 @@ def singleImage(image_id):
     image = Image.query.filter_by(id=image_id).first()
     comment = Comment.query.filter_by(image_id=image_id).all()
 
+    
+    image.view_count += 1
+    db.session.commit()
+
     return render_template("single_image.html", title="Image", image=image, comment_show=int(image.user_id) == int(current_user.get_id()), comments=comment)
 
 @app.route('/delete/<filename>')
@@ -170,7 +174,7 @@ def deleteAll():
 def allImages():
     image_files = Image.query.filter_by().all()
 
-    return render_template("all_images.html", title="All Images", images=image_files)
+    return render_template("all_images.html", title="All Images", images=image_files, active="allImages")
 
 
 @app.route("/addComment", methods=["POST"])
@@ -179,9 +183,14 @@ def addComment():
     content = request.form["comment"]
     image_id = request.form["image_id"]
 
+    image = Image.query.filter_by(id=image_id).first()
+
+    image.comment_count += 1
+
     comment = Comment(user_id=current_user.get_id(), image_id=image_id, content=content)
     
     db.session.add(comment)
+
     db.session.commit()
 
     flash("Comment added successfully", "success")
@@ -193,7 +202,12 @@ def deleteComment(comment_id):
     comment = Comment.query.filter_by(id=comment_id).first()
     image_id = comment.image_id
 
+    image = Image.query.filter_by(id=image_id).first()
+
+    image.comment_count -= 1
+
     db.session.delete(comment)
+
     db.session.commit()
 
     flash("Comment deleted successfully", "success")

@@ -23,7 +23,7 @@
 {% block content %}
 
 <div class="container-fluid">
-    <div>
+    <div class="d-none">
         <a class="delete__all" href="{{ url_for('deleteAll') }}">Delete All</a>
     </div>
     {% if images|length > 0 %}
@@ -52,11 +52,11 @@
                     </div>
                     <div>
                         <i class="fa-solid fa-comment fs-7"></i>
-                        <span class="fs-7">150</span>
+                        <span class="fs-7 ms-1">{{ image.comment_count }}</span>
                     </div>
                     <div>
                         <i class="fa-solid fa-eye fs-7"></i>
-                        <span class="fs-7">100</span>
+                        <span class="fs-7 ms-1">{{ image.view_count }}</span>
                     </div>
                 </div>
             </div>

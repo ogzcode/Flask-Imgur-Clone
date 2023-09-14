@@ -40,6 +40,8 @@ class Image(db.Model):
     path = db.Column(db.String(120), index=True, unique = True)
     title = db.Column(db.String(120), index=True)
     content = db.Column(db.Text)
+    view_count = db.Column(db.Integer, default=0)
+    comment_count = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
