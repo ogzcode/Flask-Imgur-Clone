@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from werkzeug.utils import secure_filename
 from app import app
 import os
@@ -15,9 +15,11 @@ def generate_random_string(length):
     letters = string.ascii_letters
     return ''.join(random.choice(letters) for _ in range(length))
 
+
 @app.route("/")
 def main():
     return redirect(url_for("login"))
+
 
 @app.get('/home')
 @login_required
@@ -26,6 +28,7 @@ def index():
     image_files = Image.query.filter_by(user_id=user_id).all()
 
     return render_template('home.html', title='Home', images=image_files, active='home')
+
 
 @app.route("/addImage", methods=["GET", "POST"])
 @login_required
@@ -38,10 +41,10 @@ def addImage():
         if file.filename == '' or file.filename.split('.')[-1] not in app.config['UPLOAD_EXTENSIONS']:
             flash('No image selected for uploading', 'danger')
             return redirect(url_for('index'))
-        
+
         filename = generate_random_string(20)
 
-        ext = os.path.splitext(file.filename)[1] 
+        ext = os.path.splitext(file.filename)[1]
         filename_with_extension = filename + ext
 
         filepath = os.path.join(
@@ -49,13 +52,14 @@ def addImage():
         file.save(filepath)
 
         user_id = current_user.get_id()
-        image = Image(user_id=user_id, path=filename_with_extension, title=title, content=description)
+        image = Image(user_id=user_id, path=filename_with_extension,
+                      title=title, content=description)
         db.session.add(image)
         db.session.commit()
 
         flash('Image uploaded successfully', 'success')
         return redirect(url_for('index'))
-    
+
     return render_template('add_image.html', title='Add Image', active='addImage')
 
 
@@ -64,7 +68,6 @@ def singleImage(image_id):
     image = Image.query.filter_by(id=image_id).first()
     comment = Comment.query.filter_by(image_id=image_id).all()
 
-    
     image.view_count += 1
     db.session.commit()
 
@@ -76,11 +79,10 @@ def delete_image(filename):
     image = Image.query.filter_by(path=filename).first()
     db.session.delete(image)
     db.session.commit()
-    
+
     os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     flash('Image deleted successfully', 'success')
     return redirect(url_for('index'))
-
 
 
 @app.route("/settings")
@@ -88,8 +90,9 @@ def delete_image(filename):
 def settings():
     user = User.query.filter_by(id=current_user.get_id()).first()
     about = UserAbout.query.filter_by(user_id=current_user.get_id()).first()
-    
+
     return render_template("settings.html", title="Settings", active="settings", user=user, about=about)
+
 
 @app.route("/editUser", methods=["POST"])
 @login_required
@@ -105,10 +108,11 @@ def editUser():
         else:
             flash("Incorrect password", "danger")
             return redirect(url_for("settings"))
-        
+
     db.session.commit()
     flash("User updated successfully", "success")
     return redirect(url_for("settings"))
+
 
 @app.route("/editAbout", methods=["POST"])
 @login_required
@@ -121,7 +125,7 @@ def editAbout():
     if profile_pic.filename != "":
         filename = generate_random_string(20)
 
-        ext = os.path.splitext(profile_pic.filename)[1] 
+        ext = os.path.splitext(profile_pic.filename)[1]
         filename_with_extension = filename + ext
 
         filepath = os.path.join(
@@ -143,7 +147,6 @@ def editAbout():
         about.website = request.form["website"] if request.form["website"] != "" else about.website
         about.location = request.form["location"] if request.form["location"] != "" else about.location
 
-    
     db.session.commit()
 
     flash("About updated successfully", "success")
@@ -187,14 +190,16 @@ def addComment():
 
     image.comment_count += 1
 
-    comment = Comment(user_id=current_user.get_id(), image_id=image_id, content=content)
-    
+    comment = Comment(user_id=current_user.get_id(),
+                      image_id=image_id, content=content)
+
     db.session.add(comment)
 
     db.session.commit()
 
     flash("Comment added successfully", "success")
     return redirect(url_for("singleImage", image_id=image_id))
+
 
 @app.route("/deleteComment/<comment_id>", methods=["GET"])
 @login_required
@@ -213,7 +218,9 @@ def deleteComment(comment_id):
     flash("Comment deleted successfully", "success")
     return redirect(url_for("singleImage", image_id=image_id))
 
-#Auth routes
+# Auth routes
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
@@ -264,6 +271,7 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for("login"))
+
 
 @app.route("/deleteAccount", methods=["POST"])
 @login_required

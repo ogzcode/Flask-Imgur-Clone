@@ -17,56 +17,60 @@
         height: 240px !important;
         object-fit: cover;
     }
+
+    .text-slate-300 {
+        color: #94a3b8;
+    }
+
+    .card-body {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        color: #fff;
+        padding: 10px;
+        transition: all .5s ease-in-out;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="container-fluid" id="home">
     <div class="d-none">
         <a class="delete__all" href="{{ url_for('deleteAll') }}">Delete All</a>
     </div>
+
     {% if images|length > 0 %}
     <div class="row d-flex flex-wrap justify-content-center p-5">
+
         {% for image in images %}
-        <div class="card image__box m-3 shadow-sm">
-            <img src="{{ url_for('static', filename='image/' + image.path) }}" alt="image" class="img" lazy>
+
+        <div class="card image__box m-3 shadow-sm" data-image-id="{{ image.id }}">
+            <a href="{{ url_for('singleImage', image_id=image.id) }}">
+                <img src="{{ url_for('static', filename='image/' + image.path) }}" class="img" loading="lazy">
+            </a>
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <p class="fs-6 my-auto">{{ image.title }}</p>
-                    <div>
-                        <a href="{{ url_for('singleImage', image_id=image.id) }}" class="btn btn-warning fs-7"><i
-                                class="fa-solid fa-right-long"></i></a>
-                        {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('delete_image', filename=image.path) }}" class="btn btn-danger fs-7">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between roboto-400 bg-body-tertiary p-2 rounded">
-                    <div>
-                        <button class="btn"><i class="fa-solid fa-up-long fs-7"></i></button>
-                        <span class="fs-7 text-decoration-none">12K</span>
-                        <button class="btn dislike--btn"><i class="fa-solid fa-down-long fs-7"></i></button>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-comment fs-7"></i>
-                        <span class="fs-7 ms-1">{{ image.comment_count }}</span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-eye fs-7"></i>
-                        <span class="fs-7 ms-1">{{ image.view_count }}</span>
-                    </div>
-                </div>
+                <p class="fs-6 my-auto">{{ image.title }}</p>
             </div>
         </div>
         {% endfor %}
     </div>
     {% else %}
     <div class="row d-flex flex-wrap justify-content-center p-5">
-        <h5 class="text-secondary">Image will be render here...</h5>
+        <h5 class="text-slate-300">Image will be render here...</h5>
     </div>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    window.addEventListener("load", function () {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const container = document.querySelector('#home');
+        container.style.height = `calc(100vh - ${navbarHeight}px)`;
+    });
+</script>
 {% endblock %}

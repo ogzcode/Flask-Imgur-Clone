@@ -18,24 +18,11 @@
         object-fit: cover;
     }
 
-    .fa-eye {
-        color: #38bdf8;
-    }
-    .fa-comment {
-        color: #f87171;
-    }
-    .fa-up-long {
-        color: #10b981;
-    }
-    .fa-down-long {
-        color: #ef4444;
-    }
     .btn,
     .btn:hover,
     .btn:focus,
     .btn:active {
         outline: none !important;
-        border: none !important;
         box-shadow: none !important;
 
     }
@@ -50,41 +37,48 @@
         color: #fff;
         background-color: #d97706;
     }
+
+    .text-slate-500 {
+        color: #94a3b8;
+    }
+
+    .card-body {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        color: #fff;
+        padding: 10px;
+        transition: all .5s ease-in-out;
+    }
+
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid mb-5" id="all">
     <div class="row d-flex flex-wrap justify-content-center p-5">
         {% for image in images %}
         <div class="card image__box m-3 shadow-sm">
-            <img src="{{ url_for('static', filename='image/' + image.path) }}" alt="image" class="img" lazy>
+            <a href="{{ url_for('singleImage', image_id=image.id) }}">
+                <img src="{{ url_for('static', filename='image/' + image.path) }}" class="img">
+            </a>
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <p class="fs-6 my-auto fw-semibold text-dark">{{ image.title }}</p>
-                    <div>
-                        <a href="{{ url_for('singleImage', image_id=image.id) }}" class="btn see-btn fs-7">
-                            <i class="fa-solid fa-right-long"></i></a>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between roboto-400 bg-body-tertiary p-2 rounded">
-                    <div>
-                        <button class="btn text-secondary">
-                            <i class="fa-regular fa-star"></i>
-                        </button>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-comment"></i>
-                        <span class="ms-1 text-secondary">{{ image.comment_count }}</span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-eye"></i>
-                        <span class="ms-1 text-secondary">{{ image.view_count }}</span>
-                    </div>
-                </div>
+                <p class="fs-6 my-0 fw-semibold">{{ image.title }}</p>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    window.addEventListener("load", function () {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const container = document.querySelector('#all');
+        container.style.height = `calc(100vh - ${navbarHeight}px)`;
+    });
+</script>
 {% endblock %}
